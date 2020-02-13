@@ -8,7 +8,7 @@ import (
 
 	"github.com/elazarl/goproxy"
 	log "github.com/liudanking/goutil/logutil"
-	"github.com/liudanking/quic-proxy/common"
+	"github.com/linzj/quic-proxy/common"
 )
 
 func main() {

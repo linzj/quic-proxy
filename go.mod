@@ -1,4 +1,4 @@
-module github.com/liudanking/quic-proxy
+module github.com/linzj/quic-proxy
 
 go 1.12
 
