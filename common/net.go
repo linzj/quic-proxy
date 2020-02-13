@@ -48,7 +48,7 @@ func (ql *QuicListener) doAccept() {
 				stream, err := sess.AcceptStream(context.TODO())
 				if err != nil {
 					log.Notice("accept stream failed:%v", err)
-					sess.Close()
+					sess.CloseWithError(err, "accept stream failed:%v")
 					return
 				}
 				log.Info("accept stream %v", stream.StreamID())
@@ -110,7 +110,7 @@ func (qd *QuicDialer) Dial(network, addr string) (net.Conn, error) {
 	stream, err := qd.sess.OpenStreamSync(context.TODO())
 	if err != nil {
 		log.Info("[1/2] open stream from session no success:%v, try to open new session", err)
-		qd.sess.Close()
+		qd.sess.CloseWithError(err, "[1/2] open stream from session no success:%v, try to open new session")
 		sess, err := quic.DialAddr(addr, &tls.Config{
 			InsecureSkipVerify: true,
 			NextProtos:         []string{KQuicProxy},
