@@ -4,6 +4,7 @@ import (
 	"crypto/tls"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/elazarl/goproxy"
 	"github.com/lucas-clemente/quic-go"
@@ -42,7 +43,7 @@ func main() {
 	}
 	username, password := parts[0], parts[1]
 
-	listener, err := quic.ListenAddr(listenAddr, generateTLSConfig(cert, key), nil)
+	listener, err := quic.ListenAddr(listenAddr, generateTLSConfig(cert, key), &quic.Config{MaxIdleTimeout: time.Hour})
 	if err != nil {
 		log.Error("listen failed:%v", err)
 		return
