@@ -5,6 +5,7 @@ import (
 	"crypto/tls"
 	"net"
 	"sync"
+	"time"
 
 	log "github.com/liudanking/goutil/logutil"
 
@@ -99,7 +100,7 @@ func (qd *QuicDialer) Dial(network, addr string) (net.Conn, error) {
 		sess, err := quic.DialAddr(addr, &tls.Config{
 			InsecureSkipVerify: qd.skipCertVerify,
 			NextProtos:         []string{KQuicProxy},
-		}, nil)
+		}, &quic.Config{MaxIdleTimeout: 99999 * time.Hour})
 		if err != nil {
 			log.Error("dial session failed:%v", err)
 			return nil, err
