@@ -43,7 +43,7 @@ func main() {
 	}
 	username, password := parts[0], parts[1]
 
-	listener, err := quic.ListenAddr(listenAddr, generateTLSConfig(cert, key), &quic.Config{MaxIdleTimeout: time.Hour})
+	listener, err := quic.ListenAddr(listenAddr, generateTLSConfig(cert, key), &quic.Config{MaxIdleTimeout: 9999 *time.Hour})
 	if err != nil {
 		log.Error("listen failed:%v", err)
 		return
