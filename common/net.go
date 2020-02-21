@@ -93,10 +93,10 @@ func NewQuicDialer(skipCertVerify bool) *QuicDialer {
 }
 
 func (qd *QuicDialer) Dial(network, addr string) (net.Conn, error) {
-	qd.Lock()
-	defer qd.Unlock()
 
 	if qd.sess == nil {
+		qd.Lock()
+		defer qd.Unlock()
 		sess, err := quic.DialAddr(addr, &tls.Config{
 			InsecureSkipVerify: qd.skipCertVerify,
 			NextProtos:         []string{KQuicProxy},
