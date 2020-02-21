@@ -110,6 +110,8 @@ func (qd *QuicDialer) Dial(network, addr string) (net.Conn, error) {
 
 	stream, err := qd.sess.OpenStreamSync(context.TODO())
 	if err != nil {
+		qd.Lock()
+		defer qd.Unlock()
 		log.Info("[1/2] open stream from session no success:%v, try to open new session", err)
 		qd.sess.CloseWithError(0, "[1/2] open stream from session no success:%v, try to open new session")
 		sess, err := quic.DialAddr(addr, &tls.Config{
